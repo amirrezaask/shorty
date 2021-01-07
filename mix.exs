@@ -15,7 +15,7 @@ defmodule Shorty.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Shorty.Http.Server, []}
+      mod: {Shorty, []}
     ]
   end
 

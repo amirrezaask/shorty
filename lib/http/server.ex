@@ -1,12 +1,16 @@
 defmodule Shorty.Http.Server do
-  use Application
+  use Supervisor
 
-  def start(_, _) do
+  def start_link(opts) do
+    Supervisor.start_link(__MODULE__, :ok, opts)
+  end
+
+  def init(_) do
     children = [
       {Redix, name: :Redix},
       Plug.Cowboy.child_spec(scheme: :http, plug: Shorty.Http.Router, options: [port: 8080])
     ]
 
-    Supervisor.start_link(children, strategy: :one_for_one)
+    Supervisor.init(children, strategy: :one_for_one)
   end
 end
